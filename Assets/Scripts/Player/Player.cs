@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
     public float movSpeed = 5f;
     private float screenMarginLimitX;
     private float screenMarginLimitY;
-    public GameObject projectilePrefab;
     public Transform projectileStartPointLeft;
     public Transform projectileStartPointRight;
     public Transform projectileStartPointUp;
@@ -73,24 +72,30 @@ public class Player : MonoBehaviour
 
     private void Shoot(Direction direction)
     {
-        switch (direction)
+        var projectile = PoolManager.Instance.GetPool("Projectile").GetItem();
+        if (projectile != null)
         {
-            case Direction.Left:
-                GameObject.Instantiate(projectilePrefab, projectileStartPointLeft.position, Quaternion.identity);
-                break;
-            case Direction.Right:
-                GameObject.Instantiate(projectilePrefab, projectileStartPointRight.position, Quaternion.identity);
-                break;
-            case Direction.Up:
-                GameObject.Instantiate(projectilePrefab, projectileStartPointUp.position, Quaternion.identity);
-                break;
-            case Direction.Down:
-                GameObject.Instantiate(projectilePrefab, projectileStartPointDown.position, Quaternion.identity);
-                break;
-            default:
-                break;
+            switch (direction)
+            {
+                case Direction.Left:
+
+                    projectile.transform.position = projectileStartPointLeft.position;
+                    break;
+                case Direction.Right:
+                    projectile.transform.position = projectileStartPointRight.position;
+                    break;
+                case Direction.Up:
+                    projectile.transform.position = projectileStartPointUp.position;
+                    break;
+                case Direction.Down:
+                    projectile.transform.position = projectileStartPointDown.position;
+                    break;
+                default:
+                    break;
+            }
+            projectile.gameObject.SetActive(true);
         }
-        
+
     }
 
     enum Direction

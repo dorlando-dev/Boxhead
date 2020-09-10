@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : PoolItem
 {
     public float movSpeed = 10f;
     private bool movesLeft = false;
@@ -16,15 +16,6 @@ public class Projectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (Input.GetKey(KeyCode.LeftArrow))
-            movesLeft = true;
-        else if (Input.GetKey(KeyCode.RightArrow))
-            movesRight = true;
-        if (Input.GetKey(KeyCode.UpArrow))
-            movesUp = true;
-        else if (Input.GetKey(KeyCode.DownArrow))
-            movesDown = true;
-
         screenMarginLimitX = Camera.main.orthographicSize * 0.9f * Camera.main.aspect;
         screenMarginLimitY = Camera.main.orthographicSize * 0.85f;
     }
@@ -52,8 +43,28 @@ public class Projectile : MonoBehaviour
             Destroy();
     }
 
+    void OnEnable()
+    {
+        if (Input.GetKey(KeyCode.LeftArrow))
+            movesLeft = true;
+        else if (Input.GetKey(KeyCode.RightArrow))
+            movesRight = true;
+        if (Input.GetKey(KeyCode.UpArrow))
+            movesUp = true;
+        else if (Input.GetKey(KeyCode.DownArrow))
+            movesDown = true;
+    }
+
+    void OnDisable()
+    {
+        movesLeft = false;
+        movesRight = false;
+        movesUp = false;
+        movesDown = false;
+    }
+
     private void Destroy()
     {
-        GameObject.Destroy(this.gameObject);
+        PoolManager.Instance.GetPool("Projectile").ReturnItem(this);
     }
 }
