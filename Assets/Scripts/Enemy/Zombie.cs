@@ -14,6 +14,7 @@ public class Zombie : MonoBehaviour
     private State state;
     private float accumTime;
     public float dyingTime = 0.5f;
+    public GameObject player;
 
     private enum Direction
     {
@@ -44,6 +45,7 @@ public class Zombie : MonoBehaviour
         {
             case State.Alive:
                 animator.SetInteger("Direction", Convert.ToInt32(direction));
+                HandleMovement();
                 if (Input.GetKey(KeyCode.D))
                     Die();
                 break;
@@ -71,6 +73,33 @@ public class Zombie : MonoBehaviour
                 gameObject.GetComponent<BoxCollider2D>().enabled = false;
             }
         }        
+    }
+
+    private void HandleMovement() {
+        if (player == null) {
+            SetPlayer();
+        }
+
+        Vector3 heading = player.transform.position - transform.position;
+        heading = heading.normalized;
+
+        if(Mathf.Abs(heading.x) > Mathf.Abs(heading.y))
+        {
+            direction = heading.x > 0? Direction.Right : Direction.Left;
+        } else
+        {
+            direction = heading.y > 0? Direction.Up : Direction.Down;
+        }
+
+        animator.SetInteger("Direction", Convert.ToInt32(direction));
+
+        float newX = transform.position.x + heading.x * movSpeed * Time.deltaTime;
+        float newY = transform.position.y + heading.y * movSpeed * Time.deltaTime;
+        transform.position = new Vector3(newX, newY, transform.position.z);
+    }
+
+    private void SetPlayer() {
+        player = GameObject.FindGameObjectsWithTag("Player")[0];
     }
 
     private void Die()
