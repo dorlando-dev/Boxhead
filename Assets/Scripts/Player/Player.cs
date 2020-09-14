@@ -89,66 +89,48 @@ public class Player : MonoBehaviour
 
     private void HandleMovement()
     {
-        orientation = new Vector2(0, 0);
-        //Movimiento horizontal
+        int vx = 0, vy = 0;
         if (Input.GetKey(KeyCode.LeftArrow))
-        {            
-            direction = Direction.Left;            
-            animator.SetInteger("KeyPressed", Convert.ToInt32(direction));
-            orientation = new Vector2(-1, orientation.y);
-            if (direction != blockedDirection)
-            {
-                var x = Math.Max(transform.position.x - movSpeed * Time.deltaTime, -screenMarginLimitX);
-                transform.position = new Vector3(x, transform.position.y, transform.position.z);
-                blockedDirection = Direction.None;
-            }
+        {
+            vx = -1;
+            direction = Direction.Left;
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
+            vx = 1;
             direction = Direction.Right;
-            animator.SetInteger("KeyPressed", Convert.ToInt32(direction));
-            orientation = new Vector2(1, orientation.y);
-            if (direction != blockedDirection)
-            {
-                var x = Math.Min(transform.position.x + movSpeed * Time.deltaTime, screenMarginLimitX);
-                transform.position = new Vector3(x, transform.position.y, transform.position.z);
-                blockedDirection = Direction.None;
-
-            }
         }
 
-        //Movimiento vertical
         if (Input.GetKey(KeyCode.UpArrow))
         {
+            vy = 1;
             direction = Direction.Up;
-            animator.SetInteger("KeyPressed", Convert.ToInt32(direction));
-            orientation = new Vector2(orientation.x, 1);
-            if (direction != blockedDirection)
-            {
-                var y = Math.Min(transform.position.y + movSpeed * Time.deltaTime, screenMarginLimitY);
-                transform.position = new Vector3(transform.position.x, y, transform.position.z);
-                blockedDirection = Direction.None;
-
-            }
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
+            vy = -1;
             direction = Direction.Down;
-            animator.SetInteger("KeyPressed", Convert.ToInt32(direction));
-            orientation = new Vector2(orientation.x, -1);
-            if (direction != blockedDirection)
-            {
-                var y = Math.Max(transform.position.y - movSpeed * Time.deltaTime, -screenMarginLimitY);
-                transform.position = new Vector3(transform.position.x, y, transform.position.z);
-                blockedDirection = Direction.None;
-            }
+        }
+        
+        Vector2 v = new Vector2(vx, vy);
+        orientation = v;
+        v = v.normalized;
+        float newX = FitToBounds(transform.position.x + v.x * movSpeed * Time.deltaTime, -screenMarginLimitX, screenMarginLimitX);
+        float newY = FitToBounds(transform.position.y + v.y * movSpeed * Time.deltaTime, -screenMarginLimitY, screenMarginLimitY);
+        transform.position = new Vector3(newX, newY, transform.position.z);
+        animator.SetInteger("KeyPressed", Convert.ToInt32(direction));
+    }
+
+    private float FitToBounds(float value, float min, float max) {
+        if (value > max) {
+            return max;
         }
 
-        //Disparos
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Shoot(direction);
+        if (value < min) {
+            return min;
         }
+
+        return value;
     }
 
     private void Shoot(Direction direction)
