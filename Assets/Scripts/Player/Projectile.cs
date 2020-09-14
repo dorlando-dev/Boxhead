@@ -6,12 +6,13 @@ using UnityEngine;
 public class Projectile : PoolItem
 {
     public float movSpeed = 10f;
-    private bool movesLeft = false;
-    private bool movesRight = false;
-    private bool movesUp = false;
-    private bool movesDown = false;
     private float screenMarginLimitX;
     private float screenMarginLimitY;
+    private Vector2 bearing;
+    private bool fromPlayer;
+
+    public Vector2 Bearing { get => bearing; set => bearing = value; }
+    public bool FromPlayer { get => fromPlayer; set => fromPlayer = value; }
 
     void Awake()
     {
@@ -23,17 +24,8 @@ public class Projectile : PoolItem
     {
         var x = transform.position.x;
         var y = transform.position.y;
-        if (movesLeft)
-            x -= movSpeed * Time.deltaTime;
-        else if (movesRight)
-            x += movSpeed * Time.deltaTime;
-        if (movesUp)
-            y += movSpeed * Time.deltaTime;
-        else if (movesDown)
-            y -= movSpeed * Time.deltaTime;
-
-        if(!movesLeft && !movesRight && !movesUp && !movesDown)
-            y += movSpeed * Time.deltaTime;
+        x += bearing.x * movSpeed * Time.deltaTime;
+        y += bearing.y * movSpeed * Time.deltaTime;
 
         if (x > -screenMarginLimitX && x < screenMarginLimitX && y > -screenMarginLimitY && y < screenMarginLimitY)
             transform.position = new Vector3(x, y, transform.position.z);
@@ -41,29 +33,10 @@ public class Projectile : PoolItem
             Destroy();
     }
 
-    void OnEnable()
-    {
-        if (Input.GetKey(KeyCode.LeftArrow))
-            movesLeft = true;
-        else if (Input.GetKey(KeyCode.RightArrow))
-            movesRight = true;
-        if (Input.GetKey(KeyCode.UpArrow))
-            movesUp = true;
-        else if (Input.GetKey(KeyCode.DownArrow))
-            movesDown = true;
-    }
-
-    void OnDisable()
-    {
-        movesLeft = false;
-        movesRight = false;
-        movesUp = false;
-        movesDown = false;
-    }
-
     public void OnTriggerEnter2D(Collider2D col)
     {
-        ReturnToPool();
+        if((fromPlayer && (string.Compare(col.gameObject.tag, "Enemy") == 0)) || (!fromPlayer && (string.Compare(col.gameObject.tag, "Player") == 0)))
+            ReturnToPool();
     }
 
     private void Destroy()

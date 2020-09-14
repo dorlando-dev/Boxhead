@@ -65,8 +65,11 @@ public class Zombie : MonoBehaviour
     {
         if(state == State.Alive)
         {
-            Die();
-            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            if (string.Compare(col.gameObject.tag, "Projectile") == 0)
+            {
+                Die();
+                gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            }
         }        
     }
 
