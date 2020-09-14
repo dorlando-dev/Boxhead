@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     public Transform projectileStartPointUp;
     public Transform projectileStartPointDown;
     public Animator animator;
-
+    public Rigidbody2D rigidbody;
 
     private float screenMarginLimitX;
     private float screenMarginLimitY;
@@ -121,13 +121,14 @@ public class Player : MonoBehaviour
             vy = -1;
             direction = Direction.Down;
         }
-        
+
         Vector2 v = new Vector2(vx, vy);
         orientation = v;
         v = v.normalized;
-        float newX = FitToBounds(transform.position.x + v.x * movSpeed * Time.deltaTime, -screenMarginLimitX, screenMarginLimitX);
-        float newY = FitToBounds(transform.position.y + v.y * movSpeed * Time.deltaTime, -screenMarginLimitY, screenMarginLimitY);
-        transform.position = new Vector3(newX, newY, transform.position.z);
+        float newX = FitToBounds(transform.position.x + v.x * movSpeed, -screenMarginLimitX, screenMarginLimitX);
+        float newY = FitToBounds(transform.position.y + v.y * movSpeed, -screenMarginLimitY, screenMarginLimitY);
+        //transform.position = new Vector3(newX, newY, transform.position.z);
+        rigidbody.velocity = v * movSpeed;
         animator.SetInteger("KeyPressed", Convert.ToInt32(direction));
     }
 
