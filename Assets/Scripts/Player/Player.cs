@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using UnityEngine;
 
@@ -8,20 +9,23 @@ public class Player : MonoBehaviour
 {
     public const string Tag = "Player";
     public float movSpeed = 5f;
-    private float screenMarginLimitX;
-    private float screenMarginLimitY;
+    public float dyingTime = 0.5f;
+
+    public Vector2 orientation;
     public Transform projectileStartPointLeft;
     public Transform projectileStartPointRight;
     public Transform projectileStartPointUp;
     public Transform projectileStartPointDown;
     public Animator animator;
+
+
+    private float screenMarginLimitX;
+    private float screenMarginLimitY;
     private Direction direction;
     private State state;
     private bool blocked;
     private Direction blockedDirection;
     private float accumTime;
-    public float dyingTime = 0.5f;
-    public Vector2 orientation;
     private KeyCode[] movementKeyCodes = new KeyCode[]
  {
          KeyCode.LeftArrow,
@@ -70,7 +74,13 @@ public class Player : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     Shoot(direction);
-                }                
+                }
+
+                //Spawn zombies
+                if (Input.GetKeyDown(KeyCode.Z))
+                {
+                    SpawnZombie();
+                }
                 break;
             case State.Dying:
                 accumTime += Time.deltaTime;
@@ -160,6 +170,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void SpawnZombie()
+    {
+        var zombie = PoolManager.Instance.GetPool("Zombie").GetItem();
+        if(zombie != null)
+        {
+            zombie.gameObject.SetActive(true);
+        }
+    }
+
     private bool AnyKeyPressed(KeyCode[] keyCodes)
     {
         for (int i = 0; i < keyCodes.Length; i++)
@@ -181,33 +200,20 @@ public class Player : MonoBehaviour
         {
             if (string.Compare(col.gameObject.tag, "Enemy") == 0)
             {
-                blockedDirection = direction;
+                
+                Die();
+                gameObject.GetComponent<BoxCollider2D>().enabled = false;
             }
         }
-        UnityEngine.Debug.Log("Choque");
     }
 
     public void OnTriggerStay2D(Collider2D col)
     {
-        //if (state == State.Alive)
-        //{
-        //    if (string.Compare(col.gameObject.tag, "Enemy") == 0)
-        //    {
-        //        blockedDirection = direction;
-        //    }
-        //}
-        UnityEngine.Debug.Log("Estoy chocando");
+
     }
 
     public void OnTriggerExit2D(Collider2D col)
     {
-        //if (state == State.Alive)
-        //{
-        //    if (string.Compare(col.gameObject.tag, "Enemy") == 0)
-        //    {
-        //        blockedDirection = direction;
-        //    }
-        //}
-        UnityEngine.Debug.Log("Deje de chocar");
+
     }
 }

@@ -3,18 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Zombie : MonoBehaviour
+public class Zombie : PoolItem
 {
     public const string Tag = "Enemy";
     public float movSpeed = 2.5f;
+    public float dyingTime = 0.5f;
+    public GameObject player;
+    public Animator animator;    
+
     private float screenMarginLimitX;
     private float screenMarginLimitY;
-    public Animator animator;
     private Direction direction;
     private State state;
     private float accumTime;
-    public float dyingTime = 0.5f;
-    public GameObject player;
+    private float startX = -0.67f, startY = 3.49f;
 
     private enum Direction
     {
@@ -37,6 +39,7 @@ public class Zombie : MonoBehaviour
         screenMarginLimitY = Camera.main.orthographicSize * 0.85f;
         state = State.Alive;
         direction = Direction.Down;
+        transform.position = new Vector2(startX, startY);
     }
 
     void Update()
@@ -44,16 +47,13 @@ public class Zombie : MonoBehaviour
         switch (state)
         {
             case State.Alive:
-                animator.SetInteger("Direction", Convert.ToInt32(direction));
                 HandleMovement();
-                if (Input.GetKey(KeyCode.D))
-                    Die();
                 break;
             case State.Dying:
                 accumTime += Time.deltaTime;
                 if (accumTime > dyingTime)
                 {
-                    gameObject.SetActive(false);
+                    Destroy();
                     state = State.Dead;
                 }
                 break;
@@ -93,8 +93,8 @@ public class Zombie : MonoBehaviour
 
         animator.SetInteger("Direction", Convert.ToInt32(direction));
 
-        float newX = transform.position.x + heading.x * movSpeed * Time.deltaTime;
-        float newY = transform.position.y + heading.y * movSpeed * Time.deltaTime;
+        float newX = FitToBounds(transform.position.x + heading.x * movSpeed * Time.deltaTime, -screenMarginLimitX, screenMarginLimitX);
+        float newY = FitToBounds(transform.position.y + heading.y * movSpeed * Time.deltaTime, -screenMarginLimitY, screenMarginLimitY);
         transform.position = new Vector3(newX, newY, transform.position.z);
     }
 
@@ -106,5 +106,25 @@ public class Zombie : MonoBehaviour
     {
         state = State.Dying;
         animator.SetInteger("Dead", Convert.ToInt32(direction));
+    }
+
+    private float FitToBounds(float value, float min, float max)
+    {
+        if (value > max)
+        {
+            return max;
+        }
+
+        if (value < min)
+        {
+            return min;
+        }
+
+        return value;
+    }
+
+    private void Destroy()
+    {
+        ReturnToPool();
     }
 }
