@@ -5,26 +5,16 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Character
 {
     public const string Tag = "Player";
-    public float movSpeed = 5f;
     public float dyingTime = 0.5f;
 
-    public Vector2 orientation;
     public Transform projectileStartPointLeft;
     public Transform projectileStartPointRight;
     public Transform projectileStartPointUp;
     public Transform projectileStartPointDown;
-    public Animator animator;
-    public Rigidbody2D rigidbody;
 
-    private float screenMarginLimitX;
-    private float screenMarginLimitY;
-    private Direction direction;
-    private State state;
-    private bool blocked;
-    private Direction blockedDirection;
     private float accumTime;
     private KeyCode[] movementKeyCodes = new KeyCode[]
  {
@@ -34,71 +24,21 @@ public class Player : MonoBehaviour
          KeyCode.UpArrow
  };
 
-    protected enum Direction
-    {
-        Left = 0,
-        Right = 1,
-        Up = 2,
-        Down = 3,
-        None = 4
-    }
-
-    protected enum State
-    {
-        Alive,
-        Dying,
-        Dead
-    }
-
     void Awake()
     {
-        screenMarginLimitX = Camera.main.orthographicSize * 0.9f * Camera.main.aspect;
-        screenMarginLimitY = Camera.main.orthographicSize * 0.85f;
         state = State.Alive;
         direction = Direction.Up;
         // Start facing up 
         orientation = new Vector2(0, 1);
     }
 
-    void Update()
+    protected override Vector3 GetHeading()
     {
-        switch (state)
+        if(!AnyKeyPressed(movementKeyCodes)) 
         {
-            case State.Alive:
-                if (AnyKeyPressed(movementKeyCodes))
-                {
-                    HandleMovement();
-                }
+            return new Vector3(0,0,0);
+        }
 
-                //Disparos 
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    Shoot(direction);
-                }
-
-                //Spawn zombies
-                if (Input.GetKeyDown(KeyCode.Z))
-                {
-                    SpawnZombie();
-                }
-                break;
-            case State.Dying:
-                accumTime += Time.deltaTime;
-                if (accumTime > dyingTime)
-                {
-                    gameObject.SetActive(false);
-                    state = State.Dead;
-                }
-                break;
-
-            case State.Dead:
-                break;
-
-        }        
-    }
-
-    private void HandleMovement()
-    {
         int vx = 0, vy = 0;
         if (Input.GetKey(KeyCode.LeftArrow))
         {
@@ -122,30 +62,17 @@ public class Player : MonoBehaviour
             direction = Direction.Down;
         }
 
-        Vector2 v = new Vector2(vx, vy);
+        Vector3 v = new Vector3(vx, vy, 0);
         orientation = v;
-        v = v.normalized;
-        float newX = FitToBounds(transform.position.x + v.x * movSpeed, -screenMarginLimitX, screenMarginLimitX);
-        float newY = FitToBounds(transform.position.y + v.y * movSpeed, -screenMarginLimitY, screenMarginLimitY);
-        //transform.position = new Vector3(newX, newY, transform.position.z);
-        rigidbody.velocity = v * movSpeed;
-        animator.SetInteger("KeyPressed", Convert.ToInt32(direction));
+        return v.normalized;
     }
 
-    private float FitToBounds(float value, float min, float max) {
-        if (value > max) {
-            return max;
+    protected override void Attack() {
+        if (!Input.GetKey(KeyCode.Space))
+        {
+            return;
         }
 
-        if (value < min) {
-            return min;
-        }
-
-        return value;
-    }
-
-    private void Shoot(Direction direction)
-    {
         var projectile = PoolManager.Instance.GetPool("Projectile").GetItem();
         if (projectile != null)
         {

@@ -10,7 +10,9 @@ public class Projectile : PoolItem
     private float screenMarginLimitY;
     private Vector2 bearing;
     private bool fromPlayer;
+    private float damage = 25f;
 
+    public float Damage { get => damage; set => damage = value; }
     public Vector2 Bearing { get => bearing; set => bearing = value; }
     public bool FromPlayer { get => fromPlayer; set => fromPlayer = value; }
 
@@ -23,7 +25,7 @@ public class Projectile : PoolItem
     void Update()
     {
         var x = transform.position.x;
-        var y = transform.position.y;
+        var y = transform.position.y;   
         x += bearing.x * movSpeed * Time.deltaTime;
         y += bearing.y * movSpeed * Time.deltaTime;
 
@@ -35,8 +37,11 @@ public class Projectile : PoolItem
 
     public void OnTriggerEnter2D(Collider2D col)
     {
-        if((fromPlayer && (string.Compare(col.gameObject.tag, "Enemy") == 0)) || (!fromPlayer && (string.Compare(col.gameObject.tag, "Player") == 0)))
-            ReturnToPool();
+        if(string.Compare(col.gameObject.tag, "Player") == 0 || string.Compare(col.gameObject.tag, "Zombie") == 0) 
+        {
+            Character target = col.gameObject.GetComponent<Character>();
+            target.HandleHit(this);
+        }
     }
 
     private void Destroy()

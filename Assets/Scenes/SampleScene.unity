@@ -684,14 +684,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movSpeed: 5
+  animator: {fileID: 994899911}
+  rigidbody: {fileID: 994899912}
   dyingTime: 0.5
-  orientation: {x: 0, y: 0}
   projectileStartPointLeft: {fileID: 1713105365}
   projectileStartPointRight: {fileID: 702108762}
   projectileStartPointUp: {fileID: 168834784}
   projectileStartPointDown: {fileID: 804868676}
-  animator: {fileID: 994899911}
-  rigidbody: {fileID: 994899912}
 --- !u!212 &994899909
 SpriteRenderer:
   m_ObjectHideFlags: 0

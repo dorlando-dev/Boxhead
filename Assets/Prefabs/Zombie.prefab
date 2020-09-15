@@ -99,10 +99,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movSpeed: 1
+  animator: {fileID: 1144241928804001890}
+  rigidbody: {fileID: 3367328929774479735}
   dyingTime: 0.5
   player: {fileID: 0}
-  animator: {fileID: 1144241928804001890}
-  startingPoint: {fileID: 0}
 --- !u!50 &3367328929774479735
 Rigidbody2D:
   serializedVersion: 4
