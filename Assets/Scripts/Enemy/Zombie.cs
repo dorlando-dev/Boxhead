@@ -6,17 +6,18 @@ using UnityEngine;
 public class Zombie : Character
 {
     public const string Tag = "Enemy";
-    public float dyingTime = 0.5f;
-    public GameObject player; 
-
-    private float accumTime;
-    private float startX = -0.67f, startY = 3.49f;
+    public GameObject player;
+    public Transform startPosition;
 
     void Awake()
     {
         state = State.Alive;
         direction = Direction.Down;
-        transform.position = new Vector2(startX, startY);
+    }
+
+    void Start()
+    {
+        transform.position = new Vector2(startPosition.position.x, startPosition.position.y);
     }
 
     public void OnTriggerEnter2D(Collider2D col)
@@ -49,13 +50,7 @@ public class Zombie : Character
         player = GameObject.FindGameObjectsWithTag("Player")[0];
     }
 
-    private void Die()
-    {
-        state = State.Dying;
-        animator.SetInteger("Dead", Convert.ToInt32(direction));
-    }
-
-    private void Destroy()
+    protected override void Destroy()
     {
         ReturnToPool();
     }

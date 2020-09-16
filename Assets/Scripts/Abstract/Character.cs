@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FrameLord.Pool;
 
 public abstract class Character : PoolItem
 {
@@ -11,9 +12,11 @@ public abstract class Character : PoolItem
     protected Direction direction;
     protected State state;
     protected Vector3 orientation;
-    public Rigidbody2D rigidbody;
+    public Rigidbody2D rigidBody;
+    public float dyingTime = 0.5f;
 
     protected float health = 100f;
+    protected float accumTime;
 
     public enum Direction
     {
@@ -37,11 +40,17 @@ public abstract class Character : PoolItem
             case State.Alive:
                 Vector3 heading = GetHeading();
                 SetDirection(heading);
-                rigidbody.velocity = heading * movSpeed;
+                rigidBody.velocity = heading * movSpeed;
 
                 Attack();
                 break;
             case State.Dying:
+                accumTime += Time.deltaTime;
+                if (accumTime > dyingTime)
+                {
+                    Destroy();
+                    state = State.Dead;
+                }
                 break;
             case State.Dead:
                 break;
@@ -64,8 +73,10 @@ public abstract class Character : PoolItem
         animator.SetInteger("Direction", Convert.ToInt32(direction));
     }
 
-    private void Die() {
-
+    protected void Die()
+    {
+        state = State.Dying;
+        //animator.SetInteger("Dead", Convert.ToInt32(direction));
     }
 
     protected abstract Vector3 GetHeading();
@@ -80,4 +91,7 @@ public abstract class Character : PoolItem
             Die();
         }
     }
+
+    protected abstract void Destroy();
+
 }

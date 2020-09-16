@@ -4,18 +4,17 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using UnityEngine;
+using FrameLord.Pool;
 
 public class Player : Character
 {
     public const string Tag = "Player";
-    public float dyingTime = 0.5f;
 
     public Transform projectileStartPointLeft;
     public Transform projectileStartPointRight;
     public Transform projectileStartPointUp;
     public Transform projectileStartPointDown;
 
-    private float accumTime;
     private KeyCode[] movementKeyCodes = new KeyCode[]
  {
          KeyCode.LeftArrow,
@@ -98,15 +97,6 @@ public class Player : Character
         }
     }
 
-    private void SpawnZombie()
-    {
-        var zombie = PoolManager.Instance.GetPool("Zombie").GetItem();
-        if(zombie != null)
-        {
-            zombie.gameObject.SetActive(true);
-        }
-    }
-
     private bool AnyKeyPressed(KeyCode[] keyCodes)
     {
         for (int i = 0; i < keyCodes.Length; i++)
@@ -115,11 +105,6 @@ public class Player : Character
                 return true;
         }
         return false;
-    }
-
-    private void Die()
-    {
-        state = State.Dying;
     }
 
     public void OnTriggerEnter2D(Collider2D col)
@@ -143,5 +128,15 @@ public class Player : Character
     public void OnTriggerExit2D(Collider2D col)
     {
 
+    }
+
+    public void Respawn()
+    {
+
+    }
+
+    protected override void Destroy()
+    {
+        UnityEngine.Debug.Log("Mori");
     }
 }
