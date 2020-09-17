@@ -45,12 +45,7 @@ public abstract class Character : PoolItem
                 Attack();
                 break;
             case State.Dying:
-                accumTime += Time.deltaTime;
-                if (accumTime > dyingTime)
-                {
-                    Destroy();
-                    state = State.Dead;
-                }
+                Destroy();
                 break;
             case State.Dead:
                 break;
@@ -86,6 +81,8 @@ public abstract class Character : PoolItem
     public void HandleHit(Projectile projectile) {
         health -= projectile.Damage;
 
+
+        rigidBody.AddForce(projectile.Bearing * 500f);
         if (health <= 0f) 
         {
             Die();

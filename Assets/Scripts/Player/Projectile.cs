@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
@@ -10,12 +10,15 @@ public class Projectile : PoolItem
     private float screenMarginLimitX;
     private float screenMarginLimitY;
     private Vector2 bearing;
-    private bool fromPlayer;
+    private Character shooter;
     private float damage = 25f;
+    private bool hit = false;
+
+    public bool Hit { get => hit; set => hit = value; }
 
     public float Damage { get => damage; set => damage = value; }
     public Vector2 Bearing { get => bearing; set => bearing = value; }
-    public bool FromPlayer { get => fromPlayer; set => fromPlayer = value; }
+    public Character Shooter { get => shooter; set => shooter = value; }
 
     void Awake()
     {
@@ -38,10 +41,15 @@ public class Projectile : PoolItem
 
     public void OnTriggerEnter2D(Collider2D col)
     {
-        if(string.Compare(col.gameObject.tag, "Player") == 0 || string.Compare(col.gameObject.tag, "Zombie") == 0) 
+        if(!hit && (string.Compare(col.gameObject.tag, "Player") == 0 || string.Compare(col.gameObject.tag, "Enemy") == 0)) 
         {
             Character target = col.gameObject.GetComponent<Character>();
+            if(target == shooter) {
+                return;
+            }
+            hit = true;
             target.HandleHit(this);
+            Destroy();
         }
     }
 

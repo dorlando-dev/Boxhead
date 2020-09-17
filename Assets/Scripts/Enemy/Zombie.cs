@@ -20,18 +20,6 @@ public class Zombie : Character
         transform.position = new Vector2(startPosition.position.x, startPosition.position.y);
     }
 
-    public void OnTriggerEnter2D(Collider2D col)
-    {
-        if(state == State.Alive)
-        {
-            if (string.Compare(col.gameObject.tag, "Projectile") == 0)
-            {
-                Die();
-                gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            }
-        }        
-    }
-
     protected override Vector3 GetHeading() {
         if (player == null) {
             SetPlayer();

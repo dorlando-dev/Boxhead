@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -67,7 +67,7 @@ public class Player : Character
     }
 
     protected override void Attack() {
-        if (!Input.GetKey(KeyCode.Space))
+        if (!Input.GetKeyDown(KeyCode.Space))
         {
             return;
         }
@@ -92,7 +92,8 @@ public class Player : Character
             }
             Projectile proj = projectile.gameObject.GetComponent<Projectile>();
             proj.Bearing = orientation;
-            proj.FromPlayer = true;
+            proj.Shooter = this;
+            proj.Hit = false;
             projectile.gameObject.SetActive(true);
         }
     }
