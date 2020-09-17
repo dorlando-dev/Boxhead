@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 84505815}
   m_Layer: 0
-  m_Name: ZombieStartPointUp
+  m_Name: ZombieStartPointUpRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,7 +147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 84505814}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.02, y: 3.34, z: 0}
+  m_LocalPosition: {x: 0.44, y: 3.34, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1430945051}
@@ -227,7 +227,7 @@ GameObject:
   m_Component:
   - component: {fileID: 372379506}
   m_Layer: 0
-  m_Name: ZombieStartPointDown
+  m_Name: ZombieStartPointDownRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -241,7 +241,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 372379505}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.66, z: 0}
+  m_LocalPosition: {x: 0.5, y: -3.66, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1430945051}
@@ -748,6 +748,36 @@ Transform:
   m_Father: {fileID: 586320828}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &792252350
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 792252351}
+  m_Layer: 0
+  m_Name: ZombieStartPointUpLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &792252351
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792252350}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.59, y: 3.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1430945051}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &804868675
 GameObject:
   m_ObjectHideFlags: 0
@@ -1026,6 +1056,36 @@ MonoBehaviour:
   poolName: Zombie
   poolItemPrefab: {fileID: 8664397661459483940, guid: b093fbfd2ae3f8e46bd7a097e567c813, type: 3}
   itemsToPreCreate: 200
+--- !u!1 &1427517949
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1427517950}
+  m_Layer: 0
+  m_Name: ZombieStartPointDownLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1427517950
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427517949}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.59, y: -3.61, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1430945051}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1430945050
 GameObject:
   m_ObjectHideFlags: 0
@@ -1055,6 +1115,8 @@ Transform:
   m_Children:
   - {fileID: 84505815}
   - {fileID: 372379506}
+  - {fileID: 792252351}
+  - {fileID: 1427517950}
   m_Father: {fileID: 2113290652}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1397,8 +1459,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5a2490e48b3bc8489af8653b2aef2b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zombieStartPointUp: {fileID: 84505815}
-  zombieStartPointDown: {fileID: 372379506}
+  zombieStartPointUpRight: {fileID: 84505815}
+  zombieStartPointDownRight: {fileID: 372379506}
+  zombieStartPointUpLeft: {fileID: 792252351}
+  zombieStartPointDownLeft: {fileID: 1427517950}
   levels: 10
   zombieAdder: 20
   zombieTimer: 1
