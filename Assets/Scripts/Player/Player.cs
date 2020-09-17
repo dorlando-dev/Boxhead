@@ -20,7 +20,8 @@ public class Player : Character
          KeyCode.LeftArrow,
          KeyCode.RightArrow,
          KeyCode.DownArrow,
-         KeyCode.UpArrow
+         KeyCode.UpArrow,
+         KeyCode.D
  };
 
     void Awake()
@@ -59,6 +60,11 @@ public class Player : Character
         {
             vy = -1;
             direction = Direction.Down;
+        }
+
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            Destroy();
         }
 
         Vector3 v = new Vector3(vx, vy, 0);
@@ -138,6 +144,7 @@ public class Player : Character
 
     protected override void Destroy()
     {
-        UnityEngine.Debug.Log("Mori");
+        gameObject.SetActive(false);
+        GameManager.Instance.NotifyPlayerDeath();
     }
 }

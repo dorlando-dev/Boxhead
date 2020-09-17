@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using FrameLord.Pool;
+using FrameLord.EventDispatcher;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -9,7 +10,6 @@ public class EnemyManager : MonoBehaviour
     public Transform zombieStartPointDownRight;
     public Transform zombieStartPointUpLeft;
     public Transform zombieStartPointDownLeft;
-    public int levels = 10;
     public int zombieAdder = 20;
     public float zombieTimer = 1f;
     public float changeLevelTimer = 3f;
@@ -72,7 +72,8 @@ public class EnemyManager : MonoBehaviour
                 if (isPlayerAlive)
                 {
                     if (currentZombies <= 0)
-                        state = State.ChangingLevel;
+                        //state = State.ChangingLevel;
+                        GameEventDispatcher.Instance.Dispatch(this, new EvnPlayerDied());
                 }
                 else
                 {
@@ -80,18 +81,11 @@ public class EnemyManager : MonoBehaviour
                 }
                 break;
             case State.ChangingLevel:
-                if (currentLevel + 1 <= levels)
+                time += Time.deltaTime;
+                if (time > changeLevelTimer)
                 {
-                    time += Time.deltaTime;
-                    if (time > changeLevelTimer)
-                    {
-                        StartLevel(++currentLevel);                        
-                        state = State.SpawningZombies;
-                    }
-                }
-                else
-                {
-                    state = State.FinishedGame;
+                    StartLevel(++currentLevel);                        
+                    state = State.SpawningZombies;
                 }
                 break;
             case State.FinishedGame:

@@ -14,8 +14,5 @@ using FrameLord.StateManager;
         {
             // Load the action game scene
             SceneManager.LoadScene("Boxy");
-
-            // Reset match
-            GameManager.Instance.Reset();
         }
     }

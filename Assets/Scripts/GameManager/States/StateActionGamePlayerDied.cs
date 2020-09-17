@@ -8,6 +8,6 @@ public class StateActionGamePlayerDied : State
 {
     protected override void OnLeaveState()
     {
-        GameManager.Instance.RespawnPlayer();
+        
     }
 }

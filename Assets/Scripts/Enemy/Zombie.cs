@@ -24,10 +24,14 @@ public class Zombie : Character
         if (player == null) {
             SetPlayer();
         }
+        if (player != null)
+        {
+            Vector3 heading = player.transform.position - transform.position;
+            orientation = heading;
+            return heading.normalized;
+        }
 
-        Vector3 heading = player.transform.position - transform.position;
-        orientation = heading;
-        return heading.normalized;
+        return new Vector3(0, 0, 0);
     }
 
     protected override void Attack() {
@@ -35,7 +39,9 @@ public class Zombie : Character
     }
 
     private void SetPlayer() {
-        player = GameObject.FindGameObjectsWithTag("Player")[0];
+        var go = GameObject.FindGameObjectsWithTag("Player");
+        if(go.Length > 0)
+            player = go[0];
     }
 
     protected override void Destroy()
