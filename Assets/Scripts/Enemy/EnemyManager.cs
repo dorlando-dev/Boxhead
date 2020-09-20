@@ -17,22 +17,21 @@ public class EnemyManager : MonoBehaviour
     public Transform juggernautStartPointDown;
     public Transform juggernautStartPointUp;
 
-    public int enemyAdder = 20;
     public float spawnTimer = 1f;
-    public float changeLevelTimer = 3f;
 
-    public int devilSpawnRatio = 15;
-    public int juggernautSpawnRatio = 2;
+    private int devilSpawnRatio = 15;
+    private int juggernautSpawnRatio = 50;
+    private int difficultyRatio = 10;
+    private float difficultyDivider = 0.9f;
+    public int maxZombies = 20;
 
     public static int pointsZombie = 10;
     public static int pointsDevil = 150;
     public static int pointsJuggernaut = 500;
 
-    private int currentLevel;
     private int enemiesCreated;
     private static int currentEnemies;
     private static bool isPlayerAlive;
-    private int enemiesInLevel;
     private float time = 0f;    
 
     private State state;
@@ -40,16 +39,12 @@ public class EnemyManager : MonoBehaviour
     enum State
     {
         SpawningEnemies,
-        PlayingLevel,
-        ChangingLevel,
         FinishedGame
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        currentLevel = 3;
-        StartLevel(currentLevel);
         isPlayerAlive = true;
         
     }
@@ -66,14 +61,13 @@ public class EnemyManager : MonoBehaviour
                     if (time > spawnTimer)
                     {
                         time = 0;
-                        if (enemiesCreated < enemiesInLevel)
+                        if (currentEnemies <= maxZombies)
                         {
                             SpawnEnemy();
                             enemiesCreated++;
-                        }
-                        else
-                        {
-                            state = State.PlayingLevel;
+                            currentEnemies++;
+                            if (enemiesCreated != 0 && enemiesCreated % difficultyRatio == 0)
+                                spawnTimer = spawnTimer * difficultyDivider;
                         }
                     }
                 }
@@ -82,38 +76,11 @@ public class EnemyManager : MonoBehaviour
                     state = State.FinishedGame;
                 }
                 break;
-            case State.PlayingLevel:
-                if (isPlayerAlive)
-                {
-                    if (currentEnemies <= 0)
-                        GameEventDispatcher.Instance.Dispatch(this, new EvnPlayerDied());
-                }
-                else
-                {
-                    state = State.FinishedGame;
-                }
-                break;
-            case State.ChangingLevel:
-                time += Time.deltaTime;
-                if (time > changeLevelTimer)
-                {
-                    StartLevel(++currentLevel);                        
-                    state = State.SpawningEnemies;
-                }
-                break;
             case State.FinishedGame:
-                UnityEngine.Debug.Log("Termino el juego");
+                GameEventDispatcher.Instance.Dispatch(this, new EvnPlayerDied());
                 break;
         }
         
-    }
-
-    private void StartLevel(int level)
-    {
-        enemiesInLevel = level * enemyAdder;
-        currentEnemies = enemiesInLevel;
-        enemiesCreated = 0;
-        UnityEngine.Debug.Log("Nivel " + level.ToString());
     }
 
     private void SpawnEnemy()

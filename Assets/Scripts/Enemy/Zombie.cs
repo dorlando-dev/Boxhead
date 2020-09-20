@@ -8,6 +8,7 @@ public class Zombie : Character
     public const string Tag = "Enemy";
     public GameObject player;
     public Transform startPosition;
+    public AudioClip audioClipDeath;
 
     void Awake()
     {
@@ -46,6 +47,7 @@ public class Zombie : Character
 
     protected override void Destroy()
     {
+        AudioSource.PlayClipAtPoint(audioClipDeath, transform.position);
         ReturnToPool();
         EnemyManager.ZombieDied();
     }

@@ -15,6 +15,9 @@ public class Player : Character
     public Transform projectileStartPointUp;
     public Transform projectileStartPointDown;
 
+    public AudioSource audioClipShoot;
+    public AudioClip audioClipDeath;
+
     private KeyCode[] movementKeyCodes = new KeyCode[]
  {
          KeyCode.LeftArrow,
@@ -101,6 +104,8 @@ public class Player : Character
             proj.Shooter = this;
             proj.Hit = false;
             projectile.gameObject.SetActive(true);
+
+            audioClipShoot.Play();            
         }
     }
 
@@ -144,6 +149,7 @@ public class Player : Character
 
     protected override void Destroy()
     {
+        AudioSource.PlayClipAtPoint(audioClipDeath, transform.position);
         gameObject.SetActive(false);
         GameManager.Instance.NotifyPlayerDeath();
     }

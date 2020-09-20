@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\FrameLord\Core\Singleton.cs" />
      <Compile Include="Assets\Scripts\GameManager\States\StatePause.cs" />
      <Compile Include="Assets\Scripts\GameEvents\EvnGameStartParams.cs" />
+     <Compile Include="Assets\Scripts\GameManager\HighscoreManager.cs" />
      <Compile Include="Assets\Scripts\Enemy\Zombie.cs" />
      <Compile Include="Assets\Scripts\FrameLord\Core\MonoBehaviorSingleton.cs" />
      <Compile Include="Assets\Scripts\FrameLord\StateManager\State.cs" />
@@ -72,6 +73,7 @@
      <Compile Include="Assets\Scripts\GameManager\States\StateActionGame.cs" />
      <Compile Include="Assets\Scripts\GameManager\GameManager.cs" />
      <Compile Include="Assets\Scripts\Enemy\Devil.cs" />
+     <Compile Include="Assets\Scripts\Enemy\Juggernaut.cs" />
      <Compile Include="Assets\Scripts\FrameLord\Pool\Pool.cs" />
      <Compile Include="Assets\Scripts\Player\Projectile.cs" />
      <Compile Include="Assets\Scripts\GameManager\States\StateMaze.cs" />
@@ -81,14 +83,12 @@
      <Compile Include="Assets\Scripts\GameManager\States\StateBoxy.cs" />
      <Compile Include="Assets\Scripts\GameManager\States\StateMainMenu.cs" />
      <Compile Include="Assets\Scripts\FrameLord\StateManager\StateManager.cs" />
+     <Compile Include="Assets\Scripts\GameManager\ScoreUIManager.cs" />
      <Compile Include="Assets\Scripts\FrameLord\EventDispatcher\GameEvent.cs" />
      <Compile Include="Assets\Scripts\GameManager\States\StateActionGamePlayerDied.cs" />
      <Compile Include="Assets\Scripts\GameEvents\EvnPlayerDied.cs" />
-     <Compile Include="Assets\Scripts\GameEvents\EvnScoreUpdate.cs" />
-     <Compile Include="Assets\Scripts\Enemy\Juggernaut.cs" />
-     <Compile Include="Assets\Scripts\GameManager\HighscoreManager.cs" />
-     <Compile Include="Assets\Scripts\GameManager\ScoreUIManager.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyManager.cs" />
+     <Compile Include="Assets\Scripts\GameEvents\EvnScoreUpdate.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>D:/ITBA/Videojuegos/Boxhead-repo/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

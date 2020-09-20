@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class Devil : Character
@@ -7,6 +8,7 @@ public class Devil : Character
     public const string Tag = "Enemy";
     public GameObject player;
     public Transform startPosition;
+    public AudioClip audioClipDeath;
 
     // Start is called before the first frame update
     void Awake()
@@ -38,6 +40,7 @@ public class Devil : Character
 
     protected override void Destroy()
     {
+        AudioSource.PlayClipAtPoint(audioClipDeath, transform.position);
         ReturnToPool();
         EnemyManager.DevilDied();
     }
