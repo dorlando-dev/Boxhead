@@ -10,22 +10,33 @@ public class EnemyManager : MonoBehaviour
     public Transform zombieStartPointDownRight;
     public Transform zombieStartPointUpLeft;
     public Transform zombieStartPointDownLeft;
-    public int zombieAdder = 20;
-    public float zombieTimer = 1f;
+
+    public Transform devilStartPointLeft;
+    public Transform devilStartPointRight;
+
+    public Transform juggernautStartPointDown;
+    public Transform juggernautStartPointUp;
+
+    public int enemyAdder = 20;
+    public float spawnTimer = 1f;
     public float changeLevelTimer = 3f;
 
+    public int devilSpawnRatio = 15;
+
+    public int juggernautSpawnRatio = 2;
+
     private int currentLevel;
-    private int zombiesCreated;
-    private static int currentZombies;
+    private int enemiesCreated;
+    private static int currentEnemies;
     private static bool isPlayerAlive;
-    private int zombiesInLevel;
-    private float time = 0f;
+    private int enemiesInLevel;
+    private float time = 0f;    
 
     private State state;
 
     enum State
     {
-        SpawningZombies,
+        SpawningEnemies,
         PlayingLevel,
         ChangingLevel,
         FinishedGame
@@ -34,7 +45,7 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentLevel = 1;
+        currentLevel = 3;
         StartLevel(currentLevel);
         isPlayerAlive = true;
         
@@ -45,17 +56,17 @@ public class EnemyManager : MonoBehaviour
     {
         switch (state)
         {
-            case State.SpawningZombies:
+            case State.SpawningEnemies:
                 if (isPlayerAlive)
                 {
                     time += Time.deltaTime;
-                    if (time > zombieTimer)
+                    if (time > spawnTimer)
                     {
                         time = 0;
-                        if (zombiesCreated < zombiesInLevel)
+                        if (enemiesCreated < enemiesInLevel)
                         {
-                            SpawnZombie();
-                            zombiesCreated++;
+                            SpawnEnemy();
+                            enemiesCreated++;
                         }
                         else
                         {
@@ -71,8 +82,7 @@ public class EnemyManager : MonoBehaviour
             case State.PlayingLevel:
                 if (isPlayerAlive)
                 {
-                    if (currentZombies <= 0)
-                        //state = State.ChangingLevel;
+                    if (currentEnemies <= 0)
                         GameEventDispatcher.Instance.Dispatch(this, new EvnPlayerDied());
                 }
                 else
@@ -85,7 +95,7 @@ public class EnemyManager : MonoBehaviour
                 if (time > changeLevelTimer)
                 {
                     StartLevel(++currentLevel);                        
-                    state = State.SpawningZombies;
+                    state = State.SpawningEnemies;
                 }
                 break;
             case State.FinishedGame:
@@ -97,30 +107,53 @@ public class EnemyManager : MonoBehaviour
 
     private void StartLevel(int level)
     {
-        zombiesInLevel = level * zombieAdder;
-        currentZombies = zombiesInLevel;
-        zombiesCreated = 0;
+        enemiesInLevel = level * enemyAdder;
+        currentEnemies = enemiesInLevel;
+        enemiesCreated = 0;
         UnityEngine.Debug.Log("Nivel " + level.ToString());
     }
 
-    private void SpawnZombie()
+    private void SpawnEnemy()
     {
-        var zombie = PoolManager.Instance.GetPool("Zombie").GetItem();
-        if (zombie != null)
+        if(enemiesCreated != 0 && enemiesCreated % devilSpawnRatio == 0)
         {
-            Zombie createdZombie = zombie.gameObject.GetComponent<Zombie>();
-            createdZombie.startPosition = ChangeSpawnPosition();
-            zombie.gameObject.SetActive(true);
+            var devil = PoolManager.Instance.GetPool("Devil").GetItem();
+            if (devil != null)
+            {
+                Devil createdDevil = devil.gameObject.GetComponent<Devil>();
+                createdDevil.startPosition = ChangeDevilSpawnPosition();
+                devil.gameObject.SetActive(true);
+            }
+        }
+        else if(enemiesCreated != 0 && enemiesCreated % juggernautSpawnRatio == 0)
+        {
+            var juggernaut = PoolManager.Instance.GetPool("Juggernaut").GetItem();
+            if (juggernaut != null)
+            {
+                Juggernaut createdJuggernaut = juggernaut.gameObject.GetComponent<Juggernaut>();
+                createdJuggernaut.startPosition = ChangeJuggernautSpawnPosition();
+                juggernaut.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            var zombie = PoolManager.Instance.GetPool("Zombie").GetItem();
+            if (zombie != null)
+            {
+                Zombie createdZombie = zombie.gameObject.GetComponent<Zombie>();
+                createdZombie.startPosition = ChangeZombieSpawnPosition();
+                zombie.gameObject.SetActive(true);
+            }
         }
     }
 
-    private int spawnPosition = 0;
-    private Transform ChangeSpawnPosition()
+    private int zombieSpawnPosition = 0;
+    private Transform ChangeZombieSpawnPosition()
     {
-        spawnPosition++;
-        if (spawnPosition > 3)
-            spawnPosition = 0;
-        switch (spawnPosition)
+        zombieSpawnPosition++;
+        if (zombieSpawnPosition > 3)
+            zombieSpawnPosition = 0;
+        switch (zombieSpawnPosition)
         {
             case 0:
                 return zombieStartPointUpRight;
@@ -133,9 +166,40 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    public static void ZombieDied()
+    private int devilSpawnPosition = 0;
+    private Transform ChangeDevilSpawnPosition()
     {
-        currentZombies--;
+        devilSpawnPosition++;
+        if (devilSpawnPosition > 1)
+            devilSpawnPosition = 0;
+        switch (devilSpawnPosition)
+        {
+            case 0:
+                return devilStartPointRight;
+            default:
+                return devilStartPointLeft;
+        }
+    }
+
+    private int juggernautSpawnPosition = 0;
+    private Transform ChangeJuggernautSpawnPosition()
+    {
+        juggernautSpawnPosition++;
+        if (juggernautSpawnPosition > 1)
+            juggernautSpawnPosition = 0;
+        switch (juggernautSpawnPosition)
+        {
+            case 0:
+                return juggernautStartPointUp;
+            default:
+                return juggernautStartPointDown;
+
+        }
+    }
+
+    public static void EnemyDied()
+    {
+        currentEnemies--;
     }
 
     public static void PlayerDied()

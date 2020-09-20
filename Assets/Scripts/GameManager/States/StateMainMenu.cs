@@ -8,11 +8,11 @@ using FrameLord.StateManager;
         protected override void OnEnterState()
         {
             SceneManager.LoadScene("MainMenu");
-        }
+    }
 
         protected override void OnLeaveState()
         {
-            // Load the action game scene
-            SceneManager.LoadScene("Boxy");
+            //// Load the action game scene
+            //SceneManager.LoadScene("Boxy");
         }
     }
