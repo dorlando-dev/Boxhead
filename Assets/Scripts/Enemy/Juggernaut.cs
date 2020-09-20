@@ -40,6 +40,6 @@ public class Juggernaut : Character
     protected override void Destroy()
     {
         ReturnToPool();
-        EnemyManager.EnemyDied();
+        EnemyManager.JuggernautDied();
     }
 }

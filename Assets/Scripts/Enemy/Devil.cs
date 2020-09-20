@@ -39,6 +39,6 @@ public class Devil : Character
     protected override void Destroy()
     {
         ReturnToPool();
-        EnemyManager.EnemyDied();
+        EnemyManager.DevilDied();
     }
 }

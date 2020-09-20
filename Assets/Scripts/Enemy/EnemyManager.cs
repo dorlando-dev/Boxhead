@@ -22,8 +22,11 @@ public class EnemyManager : MonoBehaviour
     public float changeLevelTimer = 3f;
 
     public int devilSpawnRatio = 15;
-
     public int juggernautSpawnRatio = 2;
+
+    public static int pointsZombie = 10;
+    public static int pointsDevil = 150;
+    public static int pointsJuggernaut = 500;
 
     private int currentLevel;
     private int enemiesCreated;
@@ -197,11 +200,23 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    public static void EnemyDied()
+    public static void ZombieDied()
     {
         currentEnemies--;
+        GameManager.Instance.NotifyEnemyDeath(pointsZombie);
     }
 
+    public static void DevilDied()
+    {
+        currentEnemies--;
+        GameManager.Instance.NotifyEnemyDeath(pointsDevil);
+    }
+
+    public static void JuggernautDied()
+    {
+        currentEnemies--;
+        GameManager.Instance.NotifyEnemyDeath(pointsJuggernaut);
+    }
     public static void PlayerDied()
     {
         isPlayerAlive = false;

@@ -47,6 +47,6 @@ public class Zombie : Character
     protected override void Destroy()
     {
         ReturnToPool();
-        EnemyManager.EnemyDied();
+        EnemyManager.ZombieDied();
     }
 }
