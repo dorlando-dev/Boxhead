@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FrameLord.Pool;
 
 public class Zombie : Character
 {
@@ -37,6 +38,23 @@ public class Zombie : Character
 
     protected override void Attack() {
 
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player") 
+        {
+            var projectile = PoolManager.Instance.GetPool("Projectile").GetItem();
+            if (projectile != null)
+            {
+                Projectile proj = projectile.gameObject.GetComponent<Projectile>();
+                projectile.transform.position = collision.gameObject.transform.position;
+                proj.Bearing = orientation;
+                proj.Shooter = this;
+                proj.Hit = false;
+                projectile.gameObject.SetActive(true);
+            }
+        }
     }
 
     private void SetPlayer() {
