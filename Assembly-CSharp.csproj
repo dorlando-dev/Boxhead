@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\GameManager\States\StateGameOver.cs" />
      <Compile Include="Assets\Scripts\FrameLord\EventDispatcher\GameEventDispatcher.cs" />
      <Compile Include="Assets\Scripts\FrameLord\EventDispatcher\OnGameEvent.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\Abstract\Character.cs" />
      <Compile Include="Assets\Scripts\FrameLord\Core\Singleton.cs" />
      <Compile Include="Assets\Scripts\GameManager\States\StatePause.cs" />
@@ -75,7 +76,7 @@
      <Compile Include="Assets\Scripts\Enemy\Devil.cs" />
      <Compile Include="Assets\Scripts\Enemy\Juggernaut.cs" />
      <Compile Include="Assets\Scripts\FrameLord\Pool\Pool.cs" />
-     <Compile Include="Assets\Scripts\Player\Projectile.cs" />
+     <Compile Include="Assets\Scripts\Abstract\Projectile.cs" />
      <Compile Include="Assets\Scripts\GameManager\States\StateMaze.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\FrameLord\Pool\PoolManager.cs" />
@@ -89,7 +90,6 @@
      <Compile Include="Assets\Scripts\GameEvents\EvnPlayerDied.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyManager.cs" />
      <Compile Include="Assets\Scripts\GameEvents\EvnScoreUpdate.cs" />
-     <Compile Include="Assets\CameraFollow.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>D:/ITBA/Videojuegos/Boxhead-repo/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
