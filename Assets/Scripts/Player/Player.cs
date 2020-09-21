@@ -22,6 +22,8 @@ public class Player : Character
     public AudioSource audioClipShoot;
     public AudioClip audioClipDeath;
 
+    public Transform topLeft, downRight;
+
     private KeyCode[] movementKeyCodes = new KeyCode[]
  {
          KeyCode.LeftArrow,
@@ -112,6 +114,10 @@ public class Player : Character
             proj.Bearing = orientation;
             proj.Shooter = this;
             proj.Hit = false;
+            proj.screenMarginLimitXLeft = topLeft.position.x;
+            proj.screenMarginLimitXRight = downRight.position.x;
+            proj.screenMarginLimitYTop = topLeft.position.y;
+            proj.screenMarginLimitYDown = downRight.position.y;
             projectile.gameObject.SetActive(true);
 
             audioClipShoot.Play();            

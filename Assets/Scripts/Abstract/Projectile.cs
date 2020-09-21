@@ -7,8 +7,10 @@ using FrameLord.Pool;
 public class Projectile : PoolItem
 {
     public float movSpeed = 10f;
-    private float screenMarginLimitX;
-    private float screenMarginLimitY;
+    public float screenMarginLimitXLeft;
+    public float screenMarginLimitXRight;
+    public float screenMarginLimitYTop;
+    public float screenMarginLimitYDown;
     private Vector2 bearing;
     private Character shooter;
     public float damage;
@@ -24,8 +26,7 @@ public class Projectile : PoolItem
 
     void Awake()
     {
-        screenMarginLimitX = Camera.main.orthographicSize * 0.9f * Camera.main.aspect;
-        screenMarginLimitY = Camera.main.orthographicSize * 0.85f;
+
     }
 
     void Update()
@@ -35,7 +36,7 @@ public class Projectile : PoolItem
         x += bearing.x * movSpeed * Time.deltaTime;
         y += bearing.y * movSpeed * Time.deltaTime;
 
-        if (x > -screenMarginLimitX && x < screenMarginLimitX && y > -screenMarginLimitY && y < screenMarginLimitY)
+        if (x > screenMarginLimitXLeft && x < screenMarginLimitXRight && y > screenMarginLimitYDown && y < screenMarginLimitYTop)
             transform.position = new Vector3(x, y, transform.position.z);
         else
             Destroy();
@@ -51,8 +52,9 @@ public class Projectile : PoolItem
             }
             hit = true;
             target.HandleHit(this);
-            Destroy();
+            
         }
+        Destroy();
     }
 
     private void Destroy()

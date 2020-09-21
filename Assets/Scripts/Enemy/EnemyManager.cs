@@ -32,7 +32,9 @@ public class EnemyManager : MonoBehaviour
     private int enemiesCreated;
     private static int currentEnemies;
     private static bool isPlayerAlive;
-    private float time = 0f;    
+    private float time = 0f;
+
+    public Transform topLeft, downRight;
 
     private State state;
 
@@ -92,6 +94,8 @@ public class EnemyManager : MonoBehaviour
             {
                 Devil createdDevil = devil.gameObject.GetComponent<Devil>();
                 createdDevil.startPosition = ChangeDevilSpawnPosition();
+                createdDevil.topLeft = topLeft;
+                createdDevil.downRight = downRight;
                 devil.gameObject.SetActive(true);
             }
         }

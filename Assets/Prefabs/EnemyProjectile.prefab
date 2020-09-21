@@ -97,8 +97,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b2e188385aa37408e36327330fcce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movSpeed: 1
-  damage: 20
+  movSpeed: 0.5
+  screenMarginLimitXLeft: 0
+  screenMarginLimitXRight: 0
+  screenMarginLimitYTop: 0
+  screenMarginLimitYDown: 0
+  damage: 25
 --- !u!58 &2155130371970939036
 CircleCollider2D:
   m_ObjectHideFlags: 0

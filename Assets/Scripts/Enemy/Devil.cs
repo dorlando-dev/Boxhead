@@ -11,6 +11,8 @@ public class Devil : Character
     public Transform startPosition;
     public AudioClip audioClipDeath;
 
+    public Transform topLeft, downRight;
+
     private float attackCooldown;
 
     // Start is called before the first frame update
@@ -61,6 +63,10 @@ public class Devil : Character
             proj.Bearing = orientation;
             proj.Shooter = this;
             proj.Hit = false;
+            proj.screenMarginLimitXLeft = topLeft.position.x;
+            proj.screenMarginLimitXRight = downRight.position.x;
+            proj.screenMarginLimitYTop = topLeft.position.y;
+            proj.screenMarginLimitYDown = downRight.position.y;
             projectile.gameObject.SetActive(true);
             attackCooldown = 500f;
         }

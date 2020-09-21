@@ -106,6 +106,8 @@ MonoBehaviour:
   player: {fileID: 0}
   startPosition: {fileID: 0}
   audioClipDeath: {fileID: 8300000, guid: b1283be90dd45fb4fa2beeb6a12b940a, type: 3}
+  topLeft: {fileID: 0}
+  downRight: {fileID: 0}
 --- !u!95 &4825296716746710437
 Animator:
   serializedVersion: 3
@@ -141,7 +143,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: f29ca1e89bec24b46a91234c090d25a0, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -156,7 +158,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
