@@ -169,7 +169,7 @@ public class Player : Character
         GameManager.Instance.NotifyPlayerDeath();
     }
 
-    protected override void DecreseHealthAnimator()
+    protected override void SetHealthAnimator()
     {
         switch (health)
         {
@@ -186,5 +186,11 @@ public class Player : Character
                 spriteRenderer.sprite = healthbarSprites[3];
                 break;
         }
+    }
+
+    public void RegenerateHealth()
+    {
+        health = Math.Min(health + 25, 100);
+        SetHealthAnimator();
     }
 }

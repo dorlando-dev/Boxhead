@@ -98,6 +98,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movSpeed: 10
+  screenMarginLimitXLeft: 0
+  screenMarginLimitXRight: 0
+  screenMarginLimitYTop: 0
+  screenMarginLimitYDown: 0
   damage: 25
 --- !u!50 &-4677563040962959351
 Rigidbody2D:

@@ -79,7 +79,7 @@ public class Devil : Character
         EnemyManager.DevilDied();
     }
 
-    protected override void DecreseHealthAnimator()
+    protected override void SetHealthAnimator()
     {
 
     }

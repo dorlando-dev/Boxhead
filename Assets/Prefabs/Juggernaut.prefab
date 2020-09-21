@@ -102,10 +102,12 @@ MonoBehaviour:
   animator: {fileID: 2087947435731605497}
   rigidBody: {fileID: 2087947435731605495}
   dyingTime: 0.5
-  health: 200
+  health: 500
   player: {fileID: 0}
   startPosition: {fileID: 0}
   audioClipDeath: {fileID: 8300000, guid: b1283be90dd45fb4fa2beeb6a12b940a, type: 3}
+  topLeft: {fileID: 0}
+  downRight: {fileID: 0}
 --- !u!50 &2087947435731605495
 Rigidbody2D:
   serializedVersion: 4

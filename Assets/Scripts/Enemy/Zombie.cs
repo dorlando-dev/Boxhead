@@ -11,6 +11,8 @@ public class Zombie : Character
     public Transform startPosition;
     public AudioClip audioClipDeath;
 
+    public Transform topLeft, downRight;
+
     void Awake()
     {
         state = State.Alive;
@@ -52,6 +54,10 @@ public class Zombie : Character
                 proj.Bearing = orientation;
                 proj.Shooter = this;
                 proj.Hit = false;
+                proj.screenMarginLimitXLeft = topLeft.position.x;
+                proj.screenMarginLimitXRight = downRight.position.x;
+                proj.screenMarginLimitYTop = topLeft.position.y;
+                proj.screenMarginLimitYDown = downRight.position.y;
                 projectile.gameObject.SetActive(true);
             }
         }
@@ -70,7 +76,7 @@ public class Zombie : Character
         EnemyManager.ZombieDied();
     }
 
-    protected override void DecreseHealthAnimator()
+    protected override void SetHealthAnimator()
     {
 
     }

@@ -80,15 +80,15 @@ public abstract class Character : PoolItem
 
     public void HandleHit(Projectile projectile) {
         health -= projectile.Damage;
-        DecreseHealthAnimator();
-        rigidBody.AddForce(projectile.Bearing * 500f);
+        SetHealthAnimator();
+        rigidBody.AddForce(projectile.Bearing.normalized * 500f);
         if (health <= 0f) 
         {
             Die();
         }
     }
 
-    protected abstract void DecreseHealthAnimator();
+    protected abstract void SetHealthAnimator();
 
     protected abstract void Destroy();
 

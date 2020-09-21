@@ -3,21 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using FrameLord.Pool;
 using FrameLord.EventDispatcher;
+using System;
 
 public class EnemyManager : MonoBehaviour
 {
-    public Transform zombieStartPointUpRight;
-    public Transform zombieStartPointDownRight;
-    public Transform zombieStartPointUpLeft;
-    public Transform zombieStartPointDownLeft;
+    public Transform[] zombieStartPoint;
+    public Transform[] devilStartPoint;
+    public Transform[] juggerStartPoint;
 
-    public Transform devilStartPointLeft;
-    public Transform devilStartPointRight;
-
-    public Transform juggernautStartPointDown;
-    public Transform juggernautStartPointUp;
-
-    private float spawnTimer = 2f;
+    public float spawnTimer = 2f;
 
     private int devilSpawnRatio = 15;
     private int juggernautSpawnRatio = 50;
@@ -34,6 +28,9 @@ public class EnemyManager : MonoBehaviour
     private static bool isPlayerAlive;
     private float time = 0f;
 
+
+    private Player player;
+
     public Transform topLeft, downRight;
 
     private State state;
@@ -48,7 +45,7 @@ public class EnemyManager : MonoBehaviour
     void Start()
     {
         isPlayerAlive = true;
-        
+        SetPlayer();
     }
 
     // Update is called once per frame
@@ -69,7 +66,10 @@ public class EnemyManager : MonoBehaviour
                             enemiesCreated++;
                             currentEnemies++;
                             if (enemiesCreated != 0 && enemiesCreated % difficultyRatio == 0)
+                            {
                                 spawnTimer = spawnTimer * difficultyDivider;
+                                player.RegenerateHealth();
+                            }
                         }
                     }
                 }
@@ -106,6 +106,8 @@ public class EnemyManager : MonoBehaviour
             {
                 Juggernaut createdJuggernaut = juggernaut.gameObject.GetComponent<Juggernaut>();
                 createdJuggernaut.startPosition = ChangeJuggernautSpawnPosition();
+                createdJuggernaut.topLeft = topLeft;
+                createdJuggernaut.downRight = downRight;
                 juggernaut.gameObject.SetActive(true);
             }
         }
@@ -116,6 +118,8 @@ public class EnemyManager : MonoBehaviour
             {
                 Zombie createdZombie = zombie.gameObject.GetComponent<Zombie>();
                 createdZombie.startPosition = ChangeZombieSpawnPosition();
+                createdZombie.topLeft = topLeft;
+                createdZombie.downRight = downRight;
                 zombie.gameObject.SetActive(true);
             }
         }
@@ -123,52 +127,26 @@ public class EnemyManager : MonoBehaviour
 
     private int zombieSpawnPosition = 0;
     private Transform ChangeZombieSpawnPosition()
-    {
-        zombieSpawnPosition++;
-        if (zombieSpawnPosition > 3)
+    {        
+        if (zombieSpawnPosition >= zombieStartPoint.Length)
             zombieSpawnPosition = 0;
-        switch (zombieSpawnPosition)
-        {
-            case 0:
-                return zombieStartPointUpRight;
-            case 1:
-                return zombieStartPointUpLeft;
-            case 2:
-                return zombieStartPointDownRight;
-            default:
-                return zombieStartPointDownLeft;
-        }
+        return zombieStartPoint[zombieSpawnPosition++];
     }
 
     private int devilSpawnPosition = 0;
     private Transform ChangeDevilSpawnPosition()
     {
-        devilSpawnPosition++;
-        if (devilSpawnPosition > 1)
+        if (devilSpawnPosition >= devilStartPoint.Length)
             devilSpawnPosition = 0;
-        switch (devilSpawnPosition)
-        {
-            case 0:
-                return devilStartPointRight;
-            default:
-                return devilStartPointLeft;
-        }
+        return devilStartPoint[devilSpawnPosition++];
     }
 
     private int juggernautSpawnPosition = 0;
     private Transform ChangeJuggernautSpawnPosition()
     {
-        juggernautSpawnPosition++;
-        if (juggernautSpawnPosition > 1)
+        if (juggernautSpawnPosition >= juggerStartPoint.Length)
             juggernautSpawnPosition = 0;
-        switch (juggernautSpawnPosition)
-        {
-            case 0:
-                return juggernautStartPointUp;
-            default:
-                return juggernautStartPointDown;
-
-        }
+        return juggerStartPoint[juggernautSpawnPosition++];
     }
 
     public static void ZombieDied()
@@ -191,5 +169,12 @@ public class EnemyManager : MonoBehaviour
     public static void PlayerDied()
     {
         isPlayerAlive = false;
+    }
+
+    private void SetPlayer()
+    {
+        var go = GameObject.FindGameObjectsWithTag("Player");
+        if (go.Length > 0)
+            player = go[0].GetComponent<Player>();
     }
 }
