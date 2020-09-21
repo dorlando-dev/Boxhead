@@ -15,7 +15,7 @@ public abstract class Character : PoolItem
     public Rigidbody2D rigidBody;
     public float dyingTime = 0.5f;
 
-    protected float health = 100f;
+    public float health = 100f;
     protected float accumTime;
 
     public enum Direction

@@ -11,8 +11,10 @@ public class Projectile : PoolItem
     private float screenMarginLimitY;
     private Vector2 bearing;
     private Character shooter;
-    private float damage = 25f;
+    public float damage;
     private bool hit = false;
+
+    public float MovSpeed { get => movSpeed; set => movSpeed = value; }
 
     public bool Hit { get => hit; set => hit = value; }
 

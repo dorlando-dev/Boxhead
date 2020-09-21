@@ -37,7 +37,7 @@ public class Zombie : Character
     }
 
     protected override void Attack() {
-
+        // handled by collision
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
