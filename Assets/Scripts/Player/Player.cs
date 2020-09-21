@@ -15,6 +15,10 @@ public class Player : Character
     public Transform projectileStartPointUp;
     public Transform projectileStartPointDown;
 
+    private SpriteRenderer spriteRenderer;
+    public Sprite[] healthbarSprites;
+    public GameObject healthbar;
+
     public AudioSource audioClipShoot;
     public AudioClip audioClipDeath;
 
@@ -33,6 +37,11 @@ public class Player : Character
         direction = Direction.Up;
         // Start facing up 
         orientation = new Vector2(0, 1);
+    }
+
+    void Start()
+    {
+        spriteRenderer = healthbar.GetComponent<SpriteRenderer>();
     }
 
     protected override Vector3 GetHeading()
@@ -152,5 +161,24 @@ public class Player : Character
         AudioSource.PlayClipAtPoint(audioClipDeath, transform.position);
         gameObject.SetActive(false);
         GameManager.Instance.NotifyPlayerDeath();
+    }
+
+    protected override void DecreseHealthAnimator()
+    {
+        switch (health)
+        {
+            case 100f:
+                spriteRenderer.sprite = healthbarSprites[0];
+                break;
+            case 75f:
+                spriteRenderer.sprite = healthbarSprites[1];
+                break;
+            case 50f:
+                spriteRenderer.sprite = healthbarSprites[2];
+                break;
+            case 25f:
+                spriteRenderer.sprite = healthbarSprites[3];
+                break;
+        }
     }
 }

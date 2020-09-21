@@ -72,4 +72,9 @@ public class Devil : Character
         ReturnToPool();
         EnemyManager.DevilDied();
     }
+
+    protected override void DecreseHealthAnimator()
+    {
+
+    }
 }

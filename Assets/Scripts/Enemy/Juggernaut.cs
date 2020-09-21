@@ -72,4 +72,9 @@ public class Juggernaut : Character
         ReturnToPool();
         EnemyManager.JuggernautDied();
     }
+
+    protected override void DecreseHealthAnimator()
+    {
+
+    }
 }

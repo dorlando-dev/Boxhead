@@ -69,4 +69,9 @@ public class Zombie : Character
         ReturnToPool();
         EnemyManager.ZombieDied();
     }
+
+    protected override void DecreseHealthAnimator()
+    {
+
+    }
 }

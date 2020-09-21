@@ -20,10 +20,10 @@ public class EnemyManager : MonoBehaviour
     private float spawnTimer = 2f;
 
     private int devilSpawnRatio = 15;
-    private int juggernautSpawnRatio = 2;
+    private int juggernautSpawnRatio = 50;
     private int difficultyRatio = 10;
     private float difficultyDivider = 0.9f;
-    public int maxZombies = 20;
+    public int maxZombies = 0;
 
     public static int pointsZombie = 10;
     public static int pointsDevil = 150;
@@ -61,7 +61,7 @@ public class EnemyManager : MonoBehaviour
                     if (time > spawnTimer)
                     {
                         time = 0;
-                        if (currentEnemies <= maxZombies)
+                        if (currentEnemies <= maxZombies || maxZombies == 0)
                         {
                             SpawnEnemy();
                             enemiesCreated++;
