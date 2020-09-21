@@ -98,10 +98,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4419e0d4fe17aad45bac80b2764a3016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movSpeed: 1
+  movSpeed: 0.5
   animator: {fileID: 1144241928804001890}
   rigidBody: {fileID: 3367328929774479735}
   dyingTime: 0.5
+  health: 100
   player: {fileID: 0}
   startPosition: {fileID: 0}
   audioClipDeath: {fileID: 8300000, guid: b1283be90dd45fb4fa2beeb6a12b940a, type: 3}

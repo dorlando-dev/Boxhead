@@ -473,7 +473,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 40}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 160, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &815710792
 MonoBehaviour:
@@ -502,13 +502,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: GAME PAUSED
+  m_Text: Game paused
 --- !u!222 &815710793
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -626,7 +626,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 125, y: 30}
+  m_SizeDelta: {x: 160, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1368131216
 MonoBehaviour:
@@ -655,7 +655,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -781,7 +781,6 @@ GameObject:
   - component: {fileID: 1500328416}
   - component: {fileID: 1500328419}
   - component: {fileID: 1500328418}
-  - component: {fileID: 1500328417}
   m_Layer: 0
   m_Name: GameOver
   m_TagString: Untagged
@@ -804,21 +803,6 @@ Transform:
   m_Father: {fileID: 2082860626}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1500328417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1500328415}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4f10050866074a33abbf44bff4b4962, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isEnabled: 1
-  connectTo: {fileID: 442972322}
-  keyToPress: 32
 --- !u!114 &1500328418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -997,7 +981,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: PRESS <SPACE> OR <ESC> TO RETURN TO THE MAIN MENU
+  m_Text: PRESS <ESC> TO RETURN TO THE MAIN MENU
 --- !u!222 &1743334378
 CanvasRenderer:
   m_ObjectHideFlags: 0

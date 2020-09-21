@@ -393,7 +393,6 @@ GameObject:
   m_Component:
   - component: {fileID: 248101049}
   - component: {fileID: 248101048}
-  - component: {fileID: 248101047}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -401,18 +400,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &248101047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 248101046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b164e79fabd3ebe468faa0ff1e05223b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!156049354 &248101048
 Grid:
   m_ObjectHideFlags: 0
@@ -983,6 +970,7 @@ MonoBehaviour:
   animator: {fileID: 994899911}
   rigidBody: {fileID: 994899912}
   dyingTime: 0.5
+  health: 100
   projectileStartPointLeft: {fileID: 1713105365}
   projectileStartPointRight: {fileID: 702108762}
   projectileStartPointUp: {fileID: 168834784}
@@ -1672,7 +1660,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -4180,7 +4168,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16

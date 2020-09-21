@@ -11,7 +11,7 @@ public class Devil : Character
     public Transform startPosition;
     public AudioClip audioClipDeath;
 
-    private int attackCooldown;
+    private float attackCooldown;
 
     // Start is called before the first frame update
     void Awake()
@@ -62,7 +62,7 @@ public class Devil : Character
             proj.Shooter = this;
             proj.Hit = false;
             projectile.gameObject.SetActive(true);
-            attackCooldown = 500;
+            attackCooldown = 500f;
         }
     }
 

@@ -89,6 +89,7 @@
      <Compile Include="Assets\Scripts\GameEvents\EvnPlayerDied.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyManager.cs" />
      <Compile Include="Assets\Scripts\GameEvents\EvnScoreUpdate.cs" />
+     <Compile Include="Assets\CameraFollow.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>D:/ITBA/Videojuegos/Boxhead-repo/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

@@ -17,10 +17,10 @@ public class EnemyManager : MonoBehaviour
     public Transform juggernautStartPointDown;
     public Transform juggernautStartPointUp;
 
-    public float spawnTimer = 1f;
+    private float spawnTimer = 2f;
 
     private int devilSpawnRatio = 15;
-    private int juggernautSpawnRatio = 50;
+    private int juggernautSpawnRatio = 2;
     private int difficultyRatio = 10;
     private float difficultyDivider = 0.9f;
     public int maxZombies = 20;
